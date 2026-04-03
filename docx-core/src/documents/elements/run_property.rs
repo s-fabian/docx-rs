@@ -59,6 +59,8 @@ pub struct RunProperty {
     pub positional_tab: Option<PositionalTab>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub shading: Option<Shading>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub lang: Option<Lang>,
 }
 
 impl RunProperty {
@@ -211,6 +213,11 @@ impl RunProperty {
         self.shading = Some(s);
         self
     }
+
+    pub fn lang(mut self, s: impl Into<String>) -> Self {
+        self.lang = Some(Lang { val: s.into() });
+        self
+    }
 }
 
 impl BuildXML for RunProperty {
@@ -245,6 +252,7 @@ impl BuildXML for RunProperty {
             .add_optional_child(&self.style)?
             .add_optional_child(&self.positional_tab)?
             .add_optional_child(&self.shading)?
+            .add_optional_child(&self.lang)?
             .close()?
             .into_inner()
     }
@@ -394,6 +402,16 @@ mod tests {
         assert_eq!(
             str::from_utf8(&b).unwrap(),
             r#"<w:rPr><w:dstrike /></w:rPr>"#
+        );
+    }
+
+    #[test]
+    fn test_lang() {
+        let c = RunProperty::new().lang("fr-FR");
+        let b = c.build();
+        assert_eq!(
+            str::from_utf8(&b).unwrap(),
+            r#"<w:rPr><w:lang w:val="fr-FR" /></w:rPr>"#
         );
     }
 }

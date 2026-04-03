@@ -145,6 +145,11 @@ impl RunProperty {
         self.0 = self.0.shading(s);
         self
     }
+
+    pub fn lang(mut self, a: &str) -> Self {
+        self.0 = self.0.lang(a);
+        self
+    }
 }
 
 impl RunProperty {

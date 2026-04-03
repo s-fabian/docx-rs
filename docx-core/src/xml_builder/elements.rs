@@ -247,6 +247,9 @@ impl<W: Write> XMLBuilder<W> {
 
     closed_with_str!(suffix, "w:suff");
 
+    // i.e. <w:lang ... >
+    closed_with_str!(lang, "w:lang");
+
     // i.e. <w:ind ... >
     pub(crate) fn indent(
         self,

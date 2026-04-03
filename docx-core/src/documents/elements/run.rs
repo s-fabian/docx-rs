@@ -344,6 +344,11 @@ impl Run {
         self.run_property = self.run_property.shading(shading);
         self
     }
+
+    pub fn lang(mut self, a: &str) -> Self {
+        self.run_property = self.run_property.lang(a);
+        self
+    }
 }
 
 impl BuildXML for RunChild {
