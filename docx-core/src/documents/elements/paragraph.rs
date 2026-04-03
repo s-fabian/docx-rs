@@ -500,6 +500,26 @@ impl Paragraph {
         });
         self
     }
+
+    pub fn set_border(mut self, border: ParagraphBorder) -> Self {
+        self.property = self.property.set_border(border);
+        self
+    }
+
+    pub fn set_borders(mut self, borders: ParagraphBorders) -> Self {
+        self.property = self.property.set_borders(borders);
+        self
+    }
+
+    pub fn clear_border(mut self, position: ParagraphBorderPosition) -> Self {
+        self.property = self.property.clear_border(position);
+        self
+    }
+
+    pub fn clear_all_borders(mut self) -> Self {
+        self.property = self.property.clear_all_borders();
+        self
+    }
 }
 
 impl BuildXML for Paragraph {
