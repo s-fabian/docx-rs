@@ -250,6 +250,8 @@ impl<W: Write> XMLBuilder<W> {
     // i.e. <w:lang ... >
     closed_with_str!(lang, "w:lang");
 
+    closed!(tbl_header, "w:tblHeader");
+
     // i.e. <w:ind ... >
     pub(crate) fn indent(
         self,

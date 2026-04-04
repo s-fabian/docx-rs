@@ -86,6 +86,11 @@ impl TableRow {
         self.property = self.property.cant_split();
         self
     }
+
+    pub fn table_header(mut self) -> Self {
+        self.property = self.property.table_header();
+        self
+    }
 }
 
 impl BuildXML for TableRow {

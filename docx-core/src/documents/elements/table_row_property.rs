@@ -22,6 +22,12 @@ pub struct TableRowProperty {
     pub ins: Option<Insert>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub cant_split: Option<CantSplit>,
+    #[serde(skip_serializing_if = "is_false")]
+    pub tbl_header: bool,
+}
+
+const fn is_false(v: &bool) -> bool {
+    !*v
 }
 
 impl TableRowProperty {
@@ -73,6 +79,11 @@ impl TableRowProperty {
         self.cant_split = Some(CantSplit::default());
         self
     }
+
+    pub fn table_header(mut self) -> Self {
+        self.tbl_header = true;
+        self
+    }
 }
 
 impl BuildXML for TableRowProperty {
@@ -90,6 +101,9 @@ impl BuildXML for TableRowProperty {
                     &format!("{}", h),
                     &self.height_rule.unwrap_or_default().to_string(),
                 )
+            })?
+            .apply_if(self.tbl_header, |b| {
+                b.tbl_header()
             })?
             .close()?
             .into_inner()
